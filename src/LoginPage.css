@@ -1,102 +1,99 @@
-/* General Layout */
+/* LoginPage.css */
 .app-container {
-  height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #4a90e2, #50c9c3);
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+  padding: 20px;
 }
 
-/* Heading */
 .login-head {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: white;
+  font-size: 3rem;
   margin-bottom: 40px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
-/* Buttons */
 .button-1 {
-  padding: 12px 25px;
-  margin: 10px;
-  border: none;
-  border-radius: 10px;
-  background: white;
-  color: #4a90e2;
+  background: #fff;
+  color: #2575fc;
   font-weight: bold;
-  font-size: 1.1rem;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
+  margin: 10px 0;
+  font-size: 1.1rem;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .button-1:hover {
-  background: #f1f1f1;
+  background: #2575fc;
+  color: #fff;
   transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-/* Overlay for Popups */
+/* Overlay & Popup */
 .overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0,0,0,0.65);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   z-index: 1000;
 }
 
-/* Popup Box */
 .popup {
   background: #fff;
-  padding: 30px;
-  width: 350px;
-  border-radius: 15px;
-  text-align: center;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-  animation: fadeIn 0.3s ease-in-out;
+  color: #333;
+  border-radius: 12px;
+  padding: 30px 40px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  animation: popupFade 0.3s ease-in-out;
+}
+
+@keyframes popupFade {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 .popup h2 {
-  margin-bottom: 20px;
-  font-size: 1.6rem;
-  color: #4a90e2;
+  text-align: center;
+  margin-bottom: 25px;
+  color: #2575fc;
 }
 
-/* Input Fields */
-.popup input {
-  width: 85%;
-  padding: 12px;
+.popup input[type="text"],
+.popup input[type="password"] {
+  width: 100%;
+  padding: 10px 12px;
   margin: 8px 0;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  outline: none;
+  border-radius: 6px;
+  border: 1px solid #ccc;
   font-size: 1rem;
-  transition: border 0.2s;
 }
 
-.popup input:focus {
-  border-color: #4a90e2;
-  box-shadow: 0 0 5px rgba(74, 144, 226, 0.4);
-}
-
-/* Popup Buttons */
 .popup-buttons {
   display: flex;
-  justify-content: space-around;
-  margin-top: 15px;
+  justify-content: space-between;
+  margin-top: 20px;
   flex-wrap: wrap;
+  gap: 10px;
 }
 
 .popup-buttons button {
-  padding: 10px 20px;
-  margin: 5px;
+  flex: 1;
+  padding: 10px 15px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -104,34 +101,27 @@
   transition: all 0.3s ease;
 }
 
-/* Primary Action */
+.popup-buttons button:hover {
+  opacity: 0.85;
+}
+
 .popup-buttons button:first-child {
-  background: #4a90e2;
-  color: white;
+  background: #2575fc;
+  color: #fff;
 }
 
-.popup-buttons button:first-child:hover {
-  background: #357ab7;
+.popup-buttons button:nth-child(2) {
+  background: #e74c3c;
+  color: #fff;
 }
 
-/* Secondary Action */
-.popup-buttons button:last-child {
-  background: #eee;
-  color: #333;
+.popup-buttons button:nth-child(3) {
+  background: #95a5a6;
+  color: #fff;
 }
 
-.popup-buttons button:last-child:hover {
-  background: #ddd;
+/* Guest/User login specific input spacing */
+.popup input[type="text"]:first-of-type {
+  margin-top: 0;
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}

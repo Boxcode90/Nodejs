@@ -22,8 +22,6 @@ function QuizPage() {
         <ul>
           <li onClick={() => {navigate("/"); setMenuOpen(false)}}>Home</li>
           <li onClick={() => {navigate("/"); setMenuOpen(false)}}>Logout</li>
-          <li onClick={() => {alert("History clicked"); setMenuOpen(false)}}>History</li>
-          <li onClick={() => {alert("Settings clicked"); setMenuOpen(false)}}>Settings</li>
         </ul>
       </div>
 
@@ -34,9 +32,6 @@ function QuizPage() {
       <div className="quiz-options">
         <button className="button-quiz" onClick={() => navigate("/QuizCreation")}>
           Create Quiz
-        </button>
-        <button className="button-quiz" onClick={() => alert("Viewing history...")}>
-          View History
         </button>
       </div>
     </div>

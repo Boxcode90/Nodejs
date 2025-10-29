@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import "./QuizCreation.css";
+import { useNavigate } from "react-router-dom";
 
 // Utility: Generate random quiz code
 function generateQuizCode() {
@@ -8,72 +9,99 @@ function generateQuizCode() {
 }
 
 function QuestionForm() {
-  const [questions, setQuestions] = useState([
-    { text: "", options: [""] },
-  ]); // start with 1 question
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [quizCode] = useState(generateQuizCode());
-  const [time, setTime] = useState(""); // quiz duration
+  const [time, setTime] = useState("");
+  const [questions, setQuestions] = useState([
+    { text: "", options: [""], correctIndex: null },
+  ]);
 
-  function addQuestion() {
-    setQuestions([...questions, { text: "", options: [""] }]);
-  }
-
-  function removeQuestion(index) {
+  // Add/Remove question
+  const addQuestion = () =>
+    setQuestions([...questions, { text: "", options: [""], correctIndex: null }]);
+  const removeQuestion = (index) => {
     const updated = [...questions];
-    updated.splice(index, 1); // remove question at index
+    updated.splice(index, 1);
     setQuestions(updated);
-  }
+  };
 
-  function handleQuestionChange(index, value) {
+  // Handle question/option input changes
+  const handleQuestionChange = (qIndex, value) => {
     const updated = [...questions];
-    updated[index].text = value;
+    updated[qIndex].text = value;
     setQuestions(updated);
-  }
+  };
 
-  function handleOptionChange(qIndex, oIndex, value) {
+  const handleOptionChange = (qIndex, oIndex, value) => {
     const updated = [...questions];
     updated[qIndex].options[oIndex] = value;
     setQuestions(updated);
-  }
+  };
 
-  function addOption(qIndex) {
+  const addOption = (qIndex) => {
     const updated = [...questions];
     updated[qIndex].options.push("");
     setQuestions(updated);
-  }
+  };
 
-  async function handleSubmit() {
+  const handleCorrectAnswerSelect = (qIndex, oIndex) => {
+    const updated = [...questions];
+    updated[qIndex].correctIndex = oIndex;
+    setQuestions(updated);
+  };
+
+  // Form submission
+  const handleSubmit = async () => {
     // Validation
     for (let q of questions) {
-      if (!q.text || q.options.length === 0 || q.options.some(opt => !opt)) {
-        alert("Please fill all questions and options");
+      if (!q.text || q.options.some((opt) => !opt)) {
+        alert("Please fill all questions and options!");
+        return;
+      }
+      if (q.correctIndex === null) {
+        alert("Please select a correct answer for each question!");
         return;
       }
     }
+
     if (!time) {
-      alert("Please enter quiz duration");
+      alert("Please enter quiz duration!");
       return;
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/quiz", {
-        title: title || "Untitled Quiz",
-        quizCode,
-        timeAllowed: time,
-        questions: questions.map(q => ({
-          questionText: q.text,
-          options: q.options.map(opt => ({ text: opt }))
-        }))
-      });
-
-      console.log("Saved quiz:", response.data);
-      alert(`Quiz saved! Code: ${quizCode}`);
+      const response = await axios.post(
+        "http://localhost:5000/api/quiz",
+        {
+          title: title || "Untitled Quiz",
+          quizCode,
+          timeAllowed: time,
+          questions: questions.map((q) => ({
+            questionText: q.text,
+            options: q.options.map((opt, i) => ({
+              text: opt,
+              isCorrect: i === q.correctIndex,
+            })),
+          })),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+    
+      console.log("Quiz created successfully:", response.data);
+      alert("✅ Quiz created successfully!");
     } catch (err) {
-      console.error(err);
-      alert("Error saving quiz.");
+      console.error("Quiz creation error:", err);
+      alert("❌ Failed to create quiz. Check console for details.");
     }
-  }
+    finally{
+      navigate("/QuizPage");
+    }
+  };
 
   return (
     <div className="quiz-container">
@@ -88,7 +116,9 @@ function QuestionForm() {
           placeholder="Enter quiz title"
         />
 
-        <p><strong>Generated Quiz Code:</strong> {quizCode}</p>
+        <p>
+          <strong>Generated Quiz Code:</strong> {quizCode}
+        </p>
 
         {questions.map((q, i) => (
           <div key={i} className="question-block">
@@ -103,7 +133,7 @@ function QuestionForm() {
                   border: "none",
                   borderRadius: "6px",
                   padding: "5px 10px",
-                  cursor: "pointer"
+                  cursor: "pointer",
                 }}
               >
                 ❌ Remove
@@ -120,15 +150,50 @@ function QuestionForm() {
             <div>
               <strong>Options:</strong>
               {q.options.map((opt, j) => (
-                <div key={j}>
-                  <input
-                    type="text"
-                    value={opt}
-                    placeholder={`Option ${j + 1}`}
-                    onChange={(e) => handleOptionChange(i, j, e.target.value)}
-                  />
-                </div>
-              ))}
+  <div
+    key={j}
+    style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "8px",
+      marginBottom: "4px",
+    }}
+  >
+    <input
+      type="radio"
+      name={`correct-${i}`}
+      checked={q.correctIndex === j}
+      onChange={() => handleCorrectAnswerSelect(i, j)}
+    />
+    <input
+      type="text"
+      value={opt}
+      placeholder={`Option ${j + 1}`}
+      onChange={(e) => handleOptionChange(i, j, e.target.value)}
+    />
+    <button
+      type="button"
+      onClick={() => {
+        const updated = [...questions];
+        updated[i].options.splice(j, 1);
+        if (updated[i].correctIndex === j) updated[i].correctIndex = null;
+        else if (updated[i].correctIndex > j) updated[i].correctIndex -= 1;
+        setQuestions(updated);
+      }}
+      style={{
+        background: "red",
+        color: "white",
+        border: "none",
+        borderRadius: "4px",
+        padding: "2px 6px",
+        cursor: "pointer",
+      }}
+    >
+      ❌ Remove
+    </button>
+  </div>
+))}
+
               <button type="button" onClick={() => addOption(i)}>
                 ➕ Add Option
               </button>
@@ -140,7 +205,7 @@ function QuestionForm() {
           ➕ Add Question
         </button>
 
-        <div>
+        <div style={{ marginTop: "12px" }}>
           <label>Time Allowed (minutes):</label>
           <input
             type="number"
@@ -150,7 +215,7 @@ function QuestionForm() {
           />
         </div>
 
-        <button className="submit-btn" onClick={handleSubmit}>
+        <button className="submit-btn" onClick={handleSubmit} style={{ marginTop: "12px" }}>
           Submit Quiz
         </button>
       </div>
