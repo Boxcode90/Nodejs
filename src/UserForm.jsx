@@ -27,7 +27,7 @@ function QuizDisplay() {
       try {
         setLoading(true);
         const response = await axios.get(
-          `http://localhost:5000/api/quiz/code/${encodeURIComponent(quizCode)}`
+          `https://nodejs-gvvo.onrender.com/api/quiz/code/${encodeURIComponent(quizCode)}`
         );
         // assume response.data is the quiz object
         setQuiz(response.data);

@@ -9,8 +9,13 @@ require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://willowy-gecko-e4f90a.netlify.app/",
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 
 // ✅ MongoDB connection (fixed)
