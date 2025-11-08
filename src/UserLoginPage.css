@@ -7,7 +7,13 @@
     align-items: center;
     width: 100%;
   }
-  
+  .quiz-input{
+    height:30px;
+    width:150px;
+    text-align: center;
+    border: #ef4dac;
+    border-radius: 30px;
+  }
   .login-card {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(20px);
@@ -74,7 +80,7 @@
   }
   
   .card h2 {
-    color: white;
+    color: #ef4dac;
     margin-bottom: 25px;
     font-size: 26px;
   }
@@ -94,7 +100,7 @@
   }
   
   .btn.primary {
-    background: linear-gradient(90deg, #007bff, #00b4ff);
+    background: #ef4dac;
   }
   
   .btn.primary:hover {
@@ -102,7 +108,7 @@
   }
   
   .btn.success {
-    background: linear-gradient(90deg, #28a745, #56d364);
+    background: #ef4dac;
   }
   
   .btn.success:hover {
@@ -110,7 +116,7 @@
   }
   
   .btn.logout {
-    background: linear-gradient(90deg, #ff416c, #ff4b2b);
+    background: #ef4dac;
   }
   
   .btn.logout:hover {

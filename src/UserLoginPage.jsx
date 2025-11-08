@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./UserLoginPage.css";
+import bg from "./assets/bg.jpg";
 
 export default function UserLoginPage() {
   const [email, setEmail] = useState("");
@@ -43,6 +44,7 @@ export default function UserLoginPage() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setToken("");
+    navigate("/");
   };
 
   const handleJoinQuiz = () => {
@@ -58,15 +60,13 @@ export default function UserLoginPage() {
 
   if (token) {
     return (
-      <div className="dashboard">
+      <div className="dashboard" style={{ backgroundImage: `url(${bg})` }}>
         <div className="card">
           <h2>Welcome!</h2>
 
-         
-
           {!showQuizInput ? (
             <button className="btn success" onClick={handleJoinQuiz}>
-              🎯 Join Quiz
+              Join Quiz
             </button>
           ) : (
             <form onSubmit={handleQuizSubmit}>
@@ -78,42 +78,18 @@ export default function UserLoginPage() {
                 className="quiz-input"
               />
               <button type="submit" className="btn success">
-                Start Quiz 🚀
+                Start Quiz 
               </button>
             </form>
           )}
 
           <button className="btn logout" onClick={handleLogout}>
-            🚪 Logout
+            Logout
           </button>
         </div>
       </div>
     );
   }
 
-  return (
-    <div className="login-container">
-      <form className="login-card" onSubmit={handleSubmit}>
-        <h2>Login</h2>
-        {error && <p className="error">{error}</p>}
-        <input
-          type="email"
-          placeholder="Email address"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit" className="btn primary">
-          Login
-        </button>
-      </form>
-    </div>
-  );
+ 
 }

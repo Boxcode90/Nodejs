@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import "./QuizCreation.css";
 import { useNavigate } from "react-router-dom";
+import bg from "./assets/bg.jpg";
 
 // Utility: Generate random quiz code
 function generateQuizCode() {
@@ -104,7 +105,7 @@ function QuestionForm() {
   };
 
   return (
-    <div className="quiz-container">
+    <div className="quiz-container" style={{ backgroundImage: `url(${bg})` }}>
       <div className="quiz-card">
         <h2>Create Quiz</h2>
 
@@ -128,7 +129,7 @@ function QuestionForm() {
                 type="button"
                 onClick={() => removeQuestion(i)}
                 style={{
-                  background: "red",
+                  background: "#f3661e",
                   color: "white",
                   border: "none",
                   borderRadius: "6px",
@@ -136,7 +137,7 @@ function QuestionForm() {
                   cursor: "pointer",
                 }}
               >
-                ❌ Remove
+                X Remove
               </button>
             </div>
 
@@ -181,7 +182,7 @@ function QuestionForm() {
         setQuestions(updated);
       }}
       style={{
-        background: "red",
+        background: "#f3661e",
         color: "white",
         border: "none",
         borderRadius: "4px",
@@ -189,20 +190,21 @@ function QuestionForm() {
         cursor: "pointer",
       }}
     >
-      ❌ Remove
+      X Remove
     </button>
   </div>
 ))}
 
-              <button type="button" onClick={() => addOption(i)}>
-                ➕ Add Option
+              <button type="button" style={{backgroundColor:'#03685a'}} onClick={() => addOption(i) 
+                }>
+                + Add Option
               </button>
             </div>
           </div>
         ))}
 
-        <button type="button" onClick={addQuestion}>
-          ➕ Add Question
+        <button type="button" style={{backgroundColor:'#03685a'}}onClick={addQuestion}>
+          + Add Question
         </button>
 
         <div style={{ marginTop: "12px" }}>

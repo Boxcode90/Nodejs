@@ -344,6 +344,7 @@ function LoginPage() {
 
   return (
     <div className="app-container">
+      <div className="login-card">
       <h1 className="login-head">Login</h1>
 
       <button className="button-1" onClick={() => setShowAdminLogin(true)}>
@@ -357,10 +358,12 @@ function LoginPage() {
       <button className="button-1" onClick={() => setShowUserLogin(true)}>
         User Login / Register
       </button>
+      </div>
       <UserLoginPopup
         show={showUserLogin}
         onClose={() => setShowUserLogin(false)}
       />
+      
     </div>
   );
 }

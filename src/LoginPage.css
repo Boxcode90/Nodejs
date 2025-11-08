@@ -4,22 +4,27 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border: 2px solid black;
   min-height: 100vh;
-  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  background: url("./assets/bg.jpg");
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #fff;
+  color: #1f5fa4;
   padding: 20px;
 }
-
+.login-card{
+  border: 2px solid black;
+}
 .login-head {
   font-size: 3rem;
   margin-bottom: 40px;
+  color:#ef4dac;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
+/* Main buttons */
 .button-1 {
-  background: #fff;
-  color: #2575fc;
+  background: #ef4dac;
+  color: #fbfbf8;
   font-weight: bold;
   padding: 12px 25px;
   border: none;
@@ -70,19 +75,50 @@
 .popup h2 {
   text-align: center;
   margin-bottom: 25px;
-  color: #2575fc;
+  color: #ef4dac
 }
 
+/* --- Consistent Input Field Styling --- */
 .popup input[type="text"],
-.popup input[type="password"] {
+.popup input[type="password"],
+.popup input[type="email"] {
   width: 100%;
-  padding: 10px 12px;
-  margin: 8px 0;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  padding: 12px 14px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1.5px solid #ccc;
   font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Focus effect for better UX */
+.popup input:focus {
+  outline: none;
+  border-color: #e70589;
+  box-shadow: 0 0 6px rgba(37, 117, 252, 0.4);
+}
+
+/* Password field alignment */
+.password-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.password-field input {
+  flex: 1;
+}
+
+/* Adjust checkbox label spacing */
+.password-field label {
+  font-size: 0.9rem;
+  color: #555;
+
+}
+
+/* Popup Buttons */
 .popup-buttons {
   display: flex;
   justify-content: space-between;
@@ -99,19 +135,21 @@
   cursor: pointer;
   font-weight: bold;
   transition: all 0.3s ease;
+  min-height: 42px;
 }
 
 .popup-buttons button:hover {
   opacity: 0.85;
 }
 
+/* Button Colors */
 .popup-buttons button:first-child {
-  background: #2575fc;
+  background: #03685a;
   color: #fff;
 }
 
 .popup-buttons button:nth-child(2) {
-  background: #e74c3c;
+  background: #f3661e;
   color: #fff;
 }
 
@@ -125,3 +163,21 @@
   margin-top: 0;
 }
 
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .popup {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .popup input[type="text"],
+  .popup input[type="password"],
+  .popup input[type="email"] {
+    font-size: 0.95rem;
+    padding: 10px 12px;
+  }
+
+  .popup-buttons button {
+    font-size: 0.95rem;
+  }
+}

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import "./QuizDisplay.css";
+import "./UserForm.css";
+import bg from "./assets/bg.jpg"; 
 
 function QuizDisplay() {
   const location = useLocation();
@@ -111,7 +112,8 @@ try {
   if (!quiz) return <p className="center-text">No quiz found.</p>;
 
   return (
-    <div className="quiz-display-container">
+    <body  style={{ backgroundImage: `url(${bg})` }} >
+    <div className="quiz-display-container"  >
       <header className="quiz-header">
         <h2 className="quiz-title">{quiz.quizTitle || quiz.title || "Quiz"}</h2>
         <div className="meta-row">
@@ -177,7 +179,7 @@ try {
               </button>
               <button
                 type="button"
-                className="reset-btn"
+                className="reset-btn" 
                 onClick={() => {
                   setSelectedAnswers({});
                   setSubmitted(false);
@@ -238,6 +240,7 @@ try {
         </>
       )}
     </div>
+    </body>
   );
 }
 

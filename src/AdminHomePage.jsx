@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import './QuizPage.css';
+import './AdminHomePage.css';
+import bg from "./assets/bg.jpg";
 
 function QuizPage() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -9,7 +10,7 @@ function QuizPage() {
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
-    <div className="quiz-container">
+    <div className="quiz-container" style={{ backgroundImage: `url(${bg})` }}>
       {/* Hamburger */}
       <div className={`hamburger ${menuOpen ? "open" : ""}`} onClick={toggleMenu}>
         <span></span>
