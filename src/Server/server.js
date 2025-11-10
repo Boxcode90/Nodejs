@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: "https:/quizappnm.netlify.app",
+    origin: "https://quizappnm.netlify.app",
     credentials: true,
   })
 );
