@@ -186,7 +186,7 @@ try {
                   setSubmitted(false);
                   setResultDetails([]);
                   setScore(0);
-                  navigate("/");
+                 
                 }}
               >
                 Reset Answers
@@ -237,6 +237,14 @@ try {
               >
                 Retake Quiz
               </button>
+              <button
+                     type="button"
+                     className="reset-btn"
+                     onClick={() => navigate("/")}
+                   >
+                    Return to Home
+               </button>
+
             </div>
           </div>
         </>
