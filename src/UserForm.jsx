@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./UserForm.css";
 import bg from "./assets/bg.jpg"; 
@@ -7,7 +8,7 @@ import bg from "./assets/bg.jpg";
 function QuizDisplay() {
   const location = useLocation();
   const { quizCode } = location.state || {};
-
+  const navigate = useNavigate();
   const [quiz, setQuiz] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -185,6 +186,7 @@ try {
                   setSubmitted(false);
                   setResultDetails([]);
                   setScore(0);
+                  navigate("/");
                 }}
               >
                 Reset Answers

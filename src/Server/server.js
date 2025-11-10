@@ -118,7 +118,6 @@ const questionSchema = new mongoose.Schema({
 const quizSchema = new mongoose.Schema({
   title: { type: String, required: true },
   quizCode: { type: String, required: true, unique: true },
-  timeAllowed: { type: Number, required: true },
   questions: [questionSchema],
   createdAt: { type: Date, default: Date.now },
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
@@ -143,7 +142,7 @@ const History = mongoose.model("History", historySchema);
 // ✅ Create new quiz (Protected)
 app.post("/api/quiz", verifyToken, async (req, res) => {
   try {
-    const { title, quizCode, timeAllowed, questions } = req.body;
+    const { title, quizCode, questions } = req.body;
 
     const existing = await Quiz.findOne({ quizCode });
     if (existing)
@@ -152,7 +151,6 @@ app.post("/api/quiz", verifyToken, async (req, res) => {
     const quiz = new Quiz({
       title,
       quizCode,
-      timeAllowed,
       questions,
       createdBy: req.user.userId,
     });
@@ -178,27 +176,8 @@ app.get("/api/quiz/code/:quizCode", async (req, res) => {
   }
 });
 
-// ✅ Save quiz result to history
-app.post("/api/history", async (req, res) => {
-  try {
-    const { quizCode, guestName, score, totalQuestions, resultDetails } =
-      req.body;
 
-    const historyEntry = new History({
-      quizCode,
-      guestName,
-      score,
-      totalQuestions,
-      resultDetails,
-    });
 
-    const savedHistory = await historyEntry.save();
-    res.status(201).json(savedHistory);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Error saving history" });
-  }
-});
 
 // ✅ Get history for a quiz
 app.get("/api/history/:quizCode", async (req, res) => {

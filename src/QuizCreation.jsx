@@ -13,7 +13,6 @@ function QuestionForm() {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [quizCode] = useState(generateQuizCode());
-  const [time, setTime] = useState("");
   const [questions, setQuestions] = useState([
     { text: "", options: [""], correctIndex: null },
   ]);
@@ -66,10 +65,7 @@ function QuestionForm() {
       }
     }
 
-    if (!time) {
-      alert("Please enter quiz duration!");
-      return;
-    }
+  
 
     try {
       const response = await axios.post(
@@ -77,7 +73,6 @@ function QuestionForm() {
         {
           title: title || "Untitled Quiz",
           quizCode,
-          timeAllowed: time,
           questions: questions.map((q) => ({
             questionText: q.text,
             options: q.options.map((opt, i) => ({
@@ -207,15 +202,7 @@ function QuestionForm() {
           + Add Question
         </button>
 
-        <div style={{ marginTop: "12px" }}>
-          <label>Time Allowed (minutes):</label>
-          <input
-            type="number"
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-            placeholder="Enter time allowed"
-          />
-        </div>
+        
 
         <button className="submit-btn" onClick={handleSubmit} style={{ marginTop: "12px" }}>
           Submit Quiz
